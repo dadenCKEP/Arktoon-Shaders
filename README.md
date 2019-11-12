@@ -1,7 +1,17 @@
 
-# Have a Question ?
-Please Contact me! : https://twitter.com/synqark/  
-or Discord server: https://discord.gg/ZeqMBut 
+# THIS SHADER IS NO LONGER MAINTAINED
+当シェーダーは開発を終了しております。  
+下記シェーダなどを今後ご利用下さい。  
+Consider to use other shaders in the future.  
+Such as these shaders :
+
+- https://github.com/poiyomi/PoiyomiToonShader
+- https://github.com/Xiexe/Xiexes-Unity-Shaders
+- https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
+- https://github.com/whiteflare/Unlit_WF_ShaderSuite
+- [MMS](https://miniscape.booth.pm/items/1627422)
+- [ReflexShader](https://reflex.booth.pm/items/1560511)
+<!-- - Arktoon 2018 -->
 
 # Arktoon-Shaders
 <img src="https://raw.githubusercontent.com/synqark/Arktoon-Shaders/master/Media/logo_1024.png" width="384">
@@ -29,7 +39,7 @@ Here : https://github.com/synqark/Arktoon-Shaders/releases
 # How to use?  
  Available only in Japanese. I'm sorry!  
  Newest : https://synqark.github.io/Arktoon-Shaders-Doc/  
- Unser 1.0.0: https://docs.google.com/document/d/15qR1ixw7YO1vKqaJXp5ul3Yvsgvv2cWa3YlXM07iQlo/edit?usp=sharing
+ Under 1.0.0: https://docs.google.com/document/d/15qR1ixw7YO1vKqaJXp5ul3Yvsgvv2cWa3YlXM07iQlo/edit?usp=sharing
 
 # Inspector Window
 
