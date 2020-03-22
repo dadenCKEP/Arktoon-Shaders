@@ -212,5 +212,9 @@ uniform float _EmissiveFreak2BlinkOutMix;
 uniform float _EmissiveFreak2BlinkIn;
 uniform float _EmissiveFreak2BlinkInMix;
 uniform float _EmissiveFreak2HueShift;
-
 #endif
+
+// MarkerBlend
+UNITY_DECLARE_TEX2D_NOSAMPLER(_MarkerTex); uniform float4 _MarkerTex_ST;
+UNITY_DECLARE_TEX2D_NOSAMPLER(_SubTex); uniform float4 _SubTex_ST;
+uniform float4 _SubColor;

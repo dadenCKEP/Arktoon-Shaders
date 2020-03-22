@@ -173,6 +173,9 @@ namespace ArktoonShaders
         MaterialProperty EmissiveFreak2BlinkIn;
         MaterialProperty EmissiveFreak2BlinkInMix;
         MaterialProperty EmissiveFreak2HueShift;
+        MaterialProperty MarkerTexture;
+        MaterialProperty SubTexture;
+        MaterialProperty SubColor;
 
         // TODO: そろそろShaderUtil.GetPropertiesで一括処理したい。
         // ただ、その場合は、カスタムインスペクタで定義していない追加のプロパティを、このファイルを弄らずに動的に表示できるようにしてあげたい（改変の負荷軽減のため）
@@ -205,6 +208,7 @@ namespace ArktoonShaders
             bool isStencilWriterMask = shader.name.Contains("Stencil/WriterMask");
             bool isRefracted = shader.name.Contains("Refracted");
             bool isEmissiveFreak = shader.name.Contains("/EmissiveFreak/");
+            bool isMarkerBlend = shader.name.Contains("/MarkerBlend/");
 
             // FindProperties
             BaseTexture = FindProperty("_MainTex", props, false);
@@ -365,6 +369,10 @@ namespace ArktoonShaders
             EmissiveFreak2BlinkInMix = FindProperty("_EmissiveFreak2BlinkInMix", props, false);
             EmissiveFreak2HueShift = FindProperty("_EmissiveFreak2HueShift", props, false);
 
+            MarkerTexture = FindProperty("_MarkerTex", props, false);
+            SubTexture = FindProperty("_SubTex", props, false);
+            SubColor = FindProperty("_SubColor", props, false);
+
             EditorGUIUtility.labelWidth = 0f;
 
             EditorGUI.BeginChangeCheck();
@@ -372,10 +380,10 @@ namespace ArktoonShaders
                 // Common
                 UIHelper.ShurikenHeader("Common");
                 UIHelper.DrawWithGroup(() => {
-					UIHelper.DrawWithGroup(() => {
+                    UIHelper.DrawWithGroup(() => {
                         materialEditor.TexturePropertySingleLine(new GUIContent("Main Texture", "Base Color Texture (RGB)"), BaseTexture, BaseColor);
                         materialEditor.TextureScaleOffsetPropertyIndent(BaseTexture);
-					});
+                    });
                     UIHelper.DrawWithGroup(() => {
                         materialEditor.TexturePropertySingleLine(new GUIContent("Normal Map", "Normal Map (RGB)"), Normalmap, BumpScale);
                         materialEditor.TextureScaleOffsetPropertyIndent(Normalmap);
@@ -805,6 +813,18 @@ namespace ArktoonShaders
                     });
                 }
 
+                // Marker
+                if(isMarkerBlend){
+                    UIHelper.ShurikenHeader("MarkerBlend");
+                    UIHelper.DrawWithGroup(() => {
+                        UIHelper.DrawWithGroup(() => {
+                            materialEditor.ShaderProperty(MarkerTexture, "Marker Texture");
+                        });
+                        UIHelper.DrawWithGroup(() => {
+                            materialEditor.TexturePropertySingleLine(new GUIContent("Sub Texture", "Sub Color Texture (RGBA)"), SubTexture, SubColor);
+                        });
+                    });
+                }
 
                 // Advanced / Experimental
                 IsShowAdvanced = UIHelper.ShurikenFoldout("Advanced / Experimental (Click to Open)", IsShowAdvanced);
