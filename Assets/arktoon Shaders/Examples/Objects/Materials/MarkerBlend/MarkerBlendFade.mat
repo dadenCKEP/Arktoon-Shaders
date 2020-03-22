@@ -282,7 +282,7 @@ Material:
     - _ShadowCapBlend: 1.21
     - _ShadowCapBlendMode: 3
     - _ShadowCapNormalMix: 0
-    - _ShadowCasterCulling: 2
+    - _ShadowCasterCulling: 0
     - _ShadowIndirectIntensity: 0.25
     - _ShadowPlanB2HueShiftFromBase: 0
     - _ShadowPlanB2SaturationFromBase: 1
@@ -306,7 +306,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseDoubleSided: 0
+    - _UseDoubleSided: 1
     - _UseEmissionParallax: 0
     - _UseGloss: 0
     - _UseLegacyCapCalc: 0
@@ -322,7 +322,7 @@ Material:
     - _Version: 1026
     - _VertexColorBlendDiffuse: 0
     - _VertexColorBlendEmissive: 0
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 0.992647, g: 0.5474156, b: 0.5474156, a: 1}
     - _Color: {r: 0.30831638, g: 0.5588235, b: 0.20955878, a: 0.78431374}

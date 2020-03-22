@@ -221,6 +221,9 @@ Shader "arktoon/MarkerBlend/AlphaCutout" {
             uniform float _CutoutCutoutAdjust;
             uniform sampler2D _MainTex; uniform float4 _MainTex_ST;
             uniform float4 _Color;
+            uniform sampler2D _SubTex; uniform float4 _SubTex_ST;
+            uniform float4 _SubColor;
+            uniform sampler2D _MarkerTex; uniform float4 _MarkerTex_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float2 texcoord0 : TEXCOORD0;
@@ -237,8 +240,9 @@ Shader "arktoon/MarkerBlend/AlphaCutout" {
                 return o;
             }
             float4 frag(VertexOutput i) : COLOR {
-                float4 _MainTex_var = tex2D(_MainTex,TRANSFORM_TEX(i.uv0, _MainTex));
-                clip((_MainTex_var.a * _Color.a) - _CutoutCutoutAdjust);
+                float markerTexture = tex2D(_MarkerTex, TRANSFORM_TEX(i.uv0, _MarkerTex)).r;
+                float4 _MainTex_var = lerp(tex2D(_MainTex, TRANSFORM_TEX(i.uv0, _MainTex)), tex2D(_SubTex, TRANSFORM_TEX(i.uv0, _SubTex)), markerTexture);
+                clip((_MainTex_var.a * lerp(_Color.a, _SubColor.a, markerTexture)) - _CutoutCutoutAdjust);
                 SHADOW_CASTER_FRAGMENT(i)
             }
             ENDCG
