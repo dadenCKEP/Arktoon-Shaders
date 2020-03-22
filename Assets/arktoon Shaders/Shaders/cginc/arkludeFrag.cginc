@@ -20,6 +20,16 @@ float4 frag(VertexOutput i) : COLOR {
     float3 Diffuse = (_MainTex_var.rgb*REF_COLOR.rgb);
     Diffuse = lerp(Diffuse, Diffuse * i.color,_VertexColorBlendDiffuse);
 
+    // MarkerBlend系ならSubTexを混ぜておく
+    #ifdef ARKTOON_MARKERBLEND
+        float markerTexture = UNITY_SAMPLE_TEX2D_SAMPLER(_MarkerTex, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _MarkerTex)).r;
+        float4 _SubTex_var = UNITY_SAMPLE_TEX2D_SAMPLER(_SubTex, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _SubTex));
+        _MainTex_var = lerp(_MainTex_var, _SubTex_var, markerTexture);
+        float3 Diffuse_Sub = (_SubTex_var.rgb*_SubColor.rgb);
+        Diffuse = lerp(Diffuse, Diffuse_Sub, markerTexture);
+    #endif
+
+
     // アウトラインであればDiffuseとColorを混ぜる
     if (_OutlineUseColorShift) {
         float3 Outline_Diff_HSV = CalculateHSV((Diffuse * _OutlineTextureColorRate + mad(i.col, - _OutlineTextureColorRate,i.col)), _OutlineHueShiftFromBase, _OutlineSaturationFromBase, _OutlineValueFromBase);

@@ -17,6 +17,15 @@ float4 frag(VertexOutput i) : COLOR {
     float3 Diffuse = (_MainTex_var.rgb*REF_COLOR.rgb);
     Diffuse = lerp(Diffuse, Diffuse * i.color,_VertexColorBlendDiffuse); // 頂点カラーを合成
 
+    // MarkerBlend系ならSubTexを混ぜておく
+    #ifdef ARKTOON_MARKERBLEND
+        float markerTexture = UNITY_SAMPLE_TEX2D_SAMPLER(_MarkerTex, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _MarkerTex)).r;
+        float4 _SubTex_var = UNITY_SAMPLE_TEX2D(_SubTex, TRANSFORM_TEX(i.uv0, _SubTex));
+        _MainTex_var = lerp(_MainTex_var, _SubTex_var, markerTexture);
+        float3 Diffuse_Sub = (_SubTex_var.rgb * _SubColor.rgb);
+        Diffuse = lerp(Diffuse, Diffuse_Sub, markerTexture);
+    #endif
+
     // アウトラインであればDiffuseとColorを混ぜる
     if (_OutlineUseColorShift) {
         float3 Outline_Diff_HSV = CalculateHSV((Diffuse * _OutlineTextureColorRate + mad(i.col, - _OutlineTextureColorRate,i.col)), _OutlineHueShiftFromBase, _OutlineSaturationFromBase, _OutlineValueFromBase);
@@ -26,13 +35,17 @@ float4 frag(VertexOutput i) : COLOR {
     }
 
     #ifdef ARKTOON_CUTOUT
-        clip((_MainTex_var.a * REF_COLOR.a) - _CutoutCutoutAdjust);
+            #ifdef ARKTOON_MARKERBLEND
+                clip(_MainTex_var.a * lerp(REF_COLOR.a, _SubColor.a, markerTexture)) - _CutoutCutoutAdjust);
+            #else
+                clip((_MainTex_var.a * REF_COLOR.a) - _CutoutCutoutAdjust);
+            #endif
     #endif
 
     #if defined(ARKTOON_CUTOUT) || defined(ARKTOON_FADE)
         if (i.isOutline) {
             float _OutlineMask_var = UNITY_SAMPLE_TEX2D_SAMPLER(_OutlineMask, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _OutlineMask)).r;
-            clip(_OutlineMask_var.r - _OutlineCutoffRange);
+            clip(_OutlineMask_var - _OutlineCutoffRange);
         }
     #endif
 
@@ -178,7 +191,11 @@ float4 frag(VertexOutput i) : COLOR {
 
     #ifdef ARKTOON_FADE
         fixed _AlphaMask_var = UNITY_SAMPLE_TEX2D_SAMPLER(_AlphaMask, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _AlphaMask)).r;
-        fixed4 finalRGBA = fixed4(finalColor * (_MainTex_var.a * REF_COLOR.a * _AlphaMask_var),0);
+        #ifdef ARKTOON_MARKERBLEND
+            fixed4 finalRGBA = fixed4(finalColor * (_MainTex_var.a * lerp(REF_COLOR.a, _SubColor.a, markerTexture) * _AlphaMask_var),0);
+        #else
+            fixed4 finalRGBA = fixed4(finalColor * (_MainTex_var.a * REF_COLOR.a * _AlphaMask_var),0);
+        #endif
     #else
         fixed4 finalRGBA = fixed4(finalColor * 1,0);
     #endif

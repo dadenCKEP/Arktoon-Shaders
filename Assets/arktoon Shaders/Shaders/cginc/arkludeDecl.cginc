@@ -33,6 +33,11 @@
 #   define REF_EMISSIONCOLOR _EmissionColor
 #endif
 
+#ifdef ARKTOON_MARKERBLEND
+    #undef REF_COLOR
+    #define REF_COLOR lerp(_Color, _SubColor, markerTexture)
+#endif
+
 // Alpha Mask
 UNITY_DECLARE_TEX2D_NOSAMPLER(_AlphaMask); uniform float4 _AlphaMask_ST;
 
