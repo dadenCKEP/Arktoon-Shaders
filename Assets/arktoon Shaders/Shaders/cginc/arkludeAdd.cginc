@@ -14,17 +14,17 @@ float4 frag(VertexOutput i) : COLOR {
     float3 cameraSpaceViewDir = mul((float3x3)unity_WorldToCamera, viewDirection);
     UNITY_LIGHT_ATTENUATION(attenuation,i, i.posWorld.xyz);
     float4 _MainTex_var = UNITY_SAMPLE_TEX2D(REF_MAINTEX, TRANSFORM_TEX(i.uv0, REF_MAINTEX));
-    float3 Diffuse = (_MainTex_var.rgb*REF_COLOR.rgb);
-    Diffuse = lerp(Diffuse, Diffuse * i.color,_VertexColorBlendDiffuse); // 頂点カラーを合成
 
     // MarkerBlend系ならSubTexを混ぜておく
     #ifdef ARKTOON_MARKERBLEND
         float markerTexture = UNITY_SAMPLE_TEX2D_SAMPLER(_MarkerTex, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _MarkerTex)).r;
         float4 _SubTex_var = UNITY_SAMPLE_TEX2D(_SubTex, TRANSFORM_TEX(i.uv0, _SubTex));
         _MainTex_var = lerp(_MainTex_var, _SubTex_var, markerTexture);
-        float3 Diffuse_Sub = (_SubTex_var.rgb * _SubColor.rgb);
-        Diffuse = lerp(Diffuse, Diffuse_Sub, markerTexture);
     #endif
+
+    float3 Diffuse = (_MainTex_var.rgb*REF_COLOR.rgb);
+    Diffuse = lerp(Diffuse, Diffuse * i.color,_VertexColorBlendDiffuse); // 頂点カラーを合成
+
 
     // アウトラインであればDiffuseとColorを混ぜる
     if (_OutlineUseColorShift) {
@@ -35,11 +35,7 @@ float4 frag(VertexOutput i) : COLOR {
     }
 
     #ifdef ARKTOON_CUTOUT
-            #ifdef ARKTOON_MARKERBLEND
-                clip(_MainTex_var.a * lerp(REF_COLOR.a, _SubColor.a, markerTexture)) - _CutoutCutoutAdjust);
-            #else
-                clip((_MainTex_var.a * REF_COLOR.a) - _CutoutCutoutAdjust);
-            #endif
+        clip((_MainTex_var.a * REF_COLOR.a) - _CutoutCutoutAdjust);
     #endif
 
     #if defined(ARKTOON_CUTOUT) || defined(ARKTOON_FADE)
@@ -191,11 +187,7 @@ float4 frag(VertexOutput i) : COLOR {
 
     #ifdef ARKTOON_FADE
         fixed _AlphaMask_var = UNITY_SAMPLE_TEX2D_SAMPLER(_AlphaMask, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _AlphaMask)).r;
-        #ifdef ARKTOON_MARKERBLEND
-            fixed4 finalRGBA = fixed4(finalColor * (_MainTex_var.a * lerp(REF_COLOR.a, _SubColor.a, markerTexture) * _AlphaMask_var),0);
-        #else
-            fixed4 finalRGBA = fixed4(finalColor * (_MainTex_var.a * REF_COLOR.a * _AlphaMask_var),0);
-        #endif
+        fixed4 finalRGBA = fixed4(finalColor * (_MainTex_var.a * REF_COLOR.a * _AlphaMask_var),0);
     #else
         fixed4 finalRGBA = fixed4(finalColor * 1,0);
     #endif

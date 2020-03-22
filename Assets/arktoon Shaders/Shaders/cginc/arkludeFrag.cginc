@@ -17,17 +17,17 @@ float4 frag(VertexOutput i) : COLOR {
     #endif
 
     float4 _MainTex_var = UNITY_SAMPLE_TEX2D(REF_MAINTEX, TRANSFORM_TEX(i.uv0, REF_MAINTEX));
-    float3 Diffuse = (_MainTex_var.rgb*REF_COLOR.rgb);
-    Diffuse = lerp(Diffuse, Diffuse * i.color,_VertexColorBlendDiffuse);
 
     // MarkerBlend系ならSubTexを混ぜておく
     #ifdef ARKTOON_MARKERBLEND
         float markerTexture = UNITY_SAMPLE_TEX2D_SAMPLER(_MarkerTex, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _MarkerTex)).r;
         float4 _SubTex_var = UNITY_SAMPLE_TEX2D_SAMPLER(_SubTex, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _SubTex));
         _MainTex_var = lerp(_MainTex_var, _SubTex_var, markerTexture);
-        float3 Diffuse_Sub = (_SubTex_var.rgb*_SubColor.rgb);
-        Diffuse = lerp(Diffuse, Diffuse_Sub, markerTexture);
     #endif
+
+    float3 Diffuse = (_MainTex_var.rgb*REF_COLOR.rgb);
+    Diffuse = lerp(Diffuse, Diffuse * i.color,_VertexColorBlendDiffuse);
+
 
 
     // アウトラインであればDiffuseとColorを混ぜる
