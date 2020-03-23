@@ -143,7 +143,7 @@ Shader "arktoon/MarkerBlend/Fade" {
         _SubTex ("[Marker Blend] Sub Texture", 2D) = "White" {}
         _SubColor ("[Marker Blend] Sub Color", Color) = (0,0,0,0)
         // Fallback Assist
-        [HideInInspector]_ALPHABLEND_ON("Fallback Alphatest Enable", Int) = 1
+        [HideInInspector]_ALPHABLEND_ON("Fallback Alphablend Enable", Int) = 1
 
     }
     SubShader {
