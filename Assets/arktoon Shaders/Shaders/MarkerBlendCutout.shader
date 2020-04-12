@@ -4,7 +4,7 @@
 //
 // 本コードおよびリポジトリ（https://github.com/synqark/Arktoon-Shader) は MIT License を使用して公開しています。
 // 詳細はLICENSEか、https://opensource.org/licenses/mit-license.php を参照してください。
-Shader "arktoon/MarkerBlend/AlphaCutout" {
+Shader "arktoon/MarkerBlend/AlphaCutout_BtUnlit" {
     Properties {
         // Double Sided
         [ATSToggle]_UseDoubleSided ("Double Sided", Int ) = 0
@@ -141,8 +141,6 @@ Shader "arktoon/MarkerBlend/AlphaCutout" {
         _MarkerTex ("[Marker Blend] Marker Texture", 2D) = "Black" {}
         _SubTex ("[Marker Blend] Sub Texture", 2D) = "White" {}
         _SubColor ("[Marker Blend] Sub Color", Color) = (0,0,0,0)
-        // Fallback Assist
-        [HideInInspector]_ALPHATEST_ON("Fallback Alphatest Enable", Int) = 1
     }
     SubShader {
         Tags {
