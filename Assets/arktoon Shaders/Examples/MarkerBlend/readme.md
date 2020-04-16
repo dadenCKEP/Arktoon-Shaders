@@ -3,7 +3,8 @@
 ## 内容物
 * Sensor: カメラです。アバターに入れると、ローカルでのみ有効になります。
 * Sensor_Friend: プレハブです。アバターに入れると、Animatorによって有効になり、フレンドでのみ有効になります。
-* 0000.png: 32px*32pxのRGBAが(0,0,0,0)のテクスチャです。_MainTex使用するとシェーダフォールバックの挙動を変更できます。
+* SensorTex.renderTexture: レンダーテクスチャです。これをSensorやSensor_FriendとシェーダーのMarker Texture(_MarkerTex)にセットし使用します。
+* 0000.png: 32px*32pxのRGBAが(0,0,0,0)のテクスチャです。_MainTex使用するとシェーダーフォールバックの挙動を変更できます。
 * testmarker.png: 32px*32pxのRGBAが左半分は(1,1,1,1)、右半分は(0,0,0,0)のテクスチャです。_MainTexや_SensorTexに入れて動作確認に使用します。
 * Animationフォルダ: Sendor_Friendに使用するAnimatorとAnimationが含まれるフォルダです。
 * MarkerBlendSample.unity: 動作確認用のサンプルアバターが含まれたシーンです。
@@ -16,25 +17,25 @@
 ### Sensor_Friendを使用する場合
 フレンドにはSub Texure、フレンド以外にはMain Texureが見えます。また、Colorの値がそれぞれテクスチャに乗算されます。
 
-## 補足(シェーダフォールバックについての詳細)
-Safetyシステムによるシェーダフォールバックを食らった場合、Unlit+CutoutやUnlit+Fadeを想定しており、シェーダ名の後ろに``_BtUnlit``をつけて意図的にUnlitへ誘導しています。
+## 補足(シェーダーフォールバックについての詳細)
+Safetyシステムによるシェーダーフォールバックを食らった場合、Unlit+CutoutやUnlit+Fadeを想定しており、シェーダー名の後ろに``_BtUnlit``をつけて意図的にUnlitへ誘導しています。
 
-MainTexが引き継がれますが、Colorはフォールバック後のシェーダには適用されないみたいです。
-シェーダフォールバックを食らった場合にCutoutしたい場合は、Colorを(*, *, *, 0)にするの"ではなく、_MainTexのスロットに付属の0000.pngを使用してください。
+MainTexが引き継がれますが、Colorはフォールバック後のシェーダーには適用されないみたいです。
+シェーダーフォールバックを食らった場合にCutoutしたい場合は、Colorを(*, *, *, 0)にするの"ではなく、_MainTexのスロットに付属の0000.pngを使用してください。
 
 ## 設定例
-### ベースのシェーダを選択
+### ベースのシェーダーを選択
 * Opaque・AlphaCutout → AlphaCutout
 * Fade → Fade
 
-※ 当然どちらも透明系シェーダに属する。
+※ 当然どちらも透明系シェーダーに属する。
 
 ### 対象選択
 * フレンドとフレンド以外で挙動を変える → アバターの適当な位置(Armatureと並列など。どこでもいよい。)にSensor_Friendを入れる
 * 自分と自分以外で挙動を変える → アバターの適当な位置(Armatureと並列など。どこでもいよい。)にSensorを入れる
 
 ### 自分側の挙動選択
-基本的には通常のシェーダと同様で、Sub TextureとSub Colorに入れる。
+基本的には通常のシェーダーと同様で、Sub TextureとSub Colorに入れる。
 
 ### 他人側の挙動選択
 * 不可視にしたい → Main Textureに付属の0000.pngを入れる
