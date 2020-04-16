@@ -3,8 +3,8 @@
 ## 内容物
 * Sensor: カメラです。アバターに入れると、ローカルでのみ有効になります。
 * Sensor_Friend: プレハブです。アバターに入れると、Animatorによって有効になり、フレンドでのみ有効になります。
-* 0000.png: 32px*32pxのARGBが(0,0,0,0)のテクスチャです。_MainTex使用するとシェーダフォールバックの挙動を変更できます。
-* testmarker.png: 32px*32pxのARGBが左半分は(1,1,1,1)、右半分は(0,0,0,0)のテクスチャです。_MainTexや_SensorTexに入れて動作確認に使用します。
+* 0000.png: 32px*32pxのRGBAが(0,0,0,0)のテクスチャです。_MainTex使用するとシェーダフォールバックの挙動を変更できます。
+* testmarker.png: 32px*32pxのRGBAが左半分は(1,1,1,1)、右半分は(0,0,0,0)のテクスチャです。_MainTexや_SensorTexに入れて動作確認に使用します。
 * Animationフォルダ: Sendor_Friendに使用するAnimatorとAnimationが含まれるフォルダです。
 * MarkerBlendSample.unity: 動作確認用のサンプルアバターが含まれたシーンです。
 * *.mat: 動作確認用のマテリアルです。
