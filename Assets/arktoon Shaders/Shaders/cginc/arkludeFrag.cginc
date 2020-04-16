@@ -42,6 +42,12 @@ float4 frag(VertexOutput i) : COLOR {
         clip((_MainTex_var.a * REF_COLOR.a) - _CutoutCutoutAdjust);
     #endif
 
+    // プロジェクタ・グラブ対策
+    // 完全に透明な部分は破棄する
+    #ifdef ARKTOON_FADE && ARKTOON_MARKERBLEND
+        clip(_MainTex_var.a * REF_COLOR.a);
+    #endif
+
     #if defined(ARKTOON_CUTOUT) || defined(ARKTOON_FADE)
         if (i.isOutline) {
             float _OutlineMask_var = UNITY_SAMPLE_TEX2D_SAMPLER(_OutlineMask, REF_MAINTEX, TRANSFORM_TEX(i.uv0, _OutlineMask)).r;
