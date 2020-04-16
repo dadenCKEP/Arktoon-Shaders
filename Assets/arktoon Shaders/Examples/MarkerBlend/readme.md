@@ -1,12 +1,17 @@
 # Arktoon-Shaders / MarkerBlend
 
+## 概要
+Arktoon-Shaders / MarkerBlendはマスク用のテクスチャによって_MainTexと_SubTexをブレンドするシェーダーです。
+
+VRChatでは「フレンドでないプレイヤーのレンダーテクスチャは無効化される」「最初からアクティブなカメラは無効化される」という仕様があり、これを利用するすることでVRChat上においては「フレンド」と「フレンド以外」、あるいは「自分」と「自分以外」で使用されるテクスチャを変更する、あるいはどちらか一方から完全に見えなくする事ができます。
+
 ## 内容物
 * Sensor: カメラです。アバターに入れると、ローカルでのみ有効になります。
 * Sensor_Friend: プレハブです。アバターに入れると、Animatorによって有効になり、フレンドでのみ有効になります。
 * SensorTex.renderTexture: レンダーテクスチャです。これをSensorやSensor_FriendとシェーダーのMarker Texture(_MarkerTex)にセットし使用します。
 * 0000.png: 32px*32pxのRGBAが(0,0,0,0)のテクスチャです。_MainTex使用するとシェーダーフォールバックの挙動を変更できます。
 * testmarker.png: 32px*32pxのRGBAが左半分は(1,1,1,1)、右半分は(0,0,0,0)のテクスチャです。_MainTexや_SensorTexに入れて動作確認に使用します。
-* Animationフォルダ: Sendor_Friendに使用するAnimatorとAnimationが含まれるフォルダです。
+* Animationフォルダー: Sendor_Friendに使用するAnimatorとAnimationが含まれるフォルダーです。
 * MarkerBlendSample.unity: 動作確認用のサンプルアバターが含まれたシーンです。
 * *.mat: 動作確認用のマテリアルです。
 

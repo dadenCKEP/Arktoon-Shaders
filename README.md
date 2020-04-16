@@ -1,7 +1,7 @@
 
 # THIS SHADER IS NO LONGER MAINTAINED
 当シェーダーは開発を終了しております。  
-下記シェーダなどを今後ご利用下さい。  
+下記シェーダーなどを今後ご利用下さい。  
 Consider to use other shaders in the future.  
 Such as these shaders :
 
@@ -35,7 +35,8 @@ Here : https://github.com/synqark/Arktoon-Shaders/releases
    - Vertex Color (usually for MagicaVoxel, etc.)
    - Simple Stencil feature. with translucent effect.
    - Additional Parallaxed Emission Texture
-   
+   - Marker Blend(→See [Here](/Assets/arktoon%20Shaders/Examples/MarkerBlend))
+
 # How to use?  
  Available only in Japanese. I'm sorry!  
  Newest : https://synqark.github.io/Arktoon-Shaders-Doc/  
