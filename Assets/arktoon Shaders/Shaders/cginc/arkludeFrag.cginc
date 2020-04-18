@@ -44,7 +44,7 @@ float4 frag(VertexOutput i) : COLOR {
 
     // プロジェクタ・グラブ対策
     // 完全に透明な部分は破棄する
-    #ifdef ARKTOON_FADE && ARKTOON_MARKERBLEND
+    #if defined(ARKTOON_FADE) && defined(ARKTOON_MARKERBLEND)
         clip(_MainTex_var.a * REF_COLOR.a);
     #endif
 
